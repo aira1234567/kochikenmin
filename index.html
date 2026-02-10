@@ -1,0 +1,86 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>高知週末イベントマップ</title>
+
+<link rel="stylesheet" href="https://unpkg.com/leaflet/dist/leaflet.css" />
+<script src="https://unpkg.com/leaflet/dist/leaflet.js"></script>
+
+<style>
+body {
+    margin: 0;
+    font-family: -apple-system, BlinkMacSystemFont, sans-serif;
+}
+
+#map {
+    height: 100vh;
+}
+
+.header {
+    position: absolute;
+    top: 12px;
+    left: 12px;
+    z-index: 1000;
+    background: white;
+    padding: 12px 16px;
+    border-radius: 14px;
+    box-shadow: 0 4px 12px rgba(0,0,0,0.15);
+    font-weight: bold;
+}
+</style>
+</head>
+
+<body>
+<div class="header">週末イベントマップ</div>
+<div id="map"></div>
+
+<script>
+// 高知中心座標
+const map = L.map('map').setView([33.5597, 133.5311], 13);
+
+// 地図タイル
+L.tileLayer('https://{s}.tile.openstreetmap.org/{z}/{x}/{y}.png', {
+    attribution: '&copy; OpenStreetMap contributors'
+}).addTo(map);
+
+// サンプルイベント
+const events = [
+    {
+        name: "日曜市",
+        lat: 33.5592,
+        lng: 133.5335,
+        date: "毎週日曜",
+        desc: "高知名物の巨大な朝市"
+    },
+    {
+        name: "中央公園ストリートライブ",
+        lat: 33.5580,
+        lng: 133.5390,
+        date: "土曜夕方",
+        desc: "地元アーティストによる音楽ライブ"
+    },
+    {
+        name: "高知蔦屋書店マルシェ",
+        lat: 33.5665,
+        lng: 133.5432,
+        date: "週末開催",
+        desc: "雑貨やフードが集まる人気マルシェ"
+    }
+];
+
+// マーカー表示
+events.forEach(event => {
+    L.marker([event.lat, event.lng])
+        .addTo(map)
+        .bindPopup(`
+            <b>${event.name}</b><br>
+            日時：${event.date}<br>
+            ${event.desc}
+        `);
+});
+</script>
+
+</body>
+</html>
